@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { List } from './components/Mark';
+import { Book } from './components/Book';
 import { Nav } from './components/Nav';
 
 const SampleData = {
@@ -17,8 +17,12 @@ function App() {
       <header>
         <Nav />
       </header>
-      <main>
-        <List />
+      <main className='container flex justify-start px-6 mx-auto mt-5 space-y-0'>
+        <Book />
+        <Book />
+        <div>
+          <button>+ Book</button>
+        </div>
       </main>
       {/* <footer>Copyright Indiflex Senior Coding</footer> */}
     </div>
