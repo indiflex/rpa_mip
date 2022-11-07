@@ -6,7 +6,7 @@ export const Nav = () => {
     <nav className='flex items-center justify-between px-2 shadow'>
       <div>
         <h1 className='text-2xl font-bold flex'>
-          <BookmarkSquareIcon className='w-8 text-gray-500' /> Sico Index
+          <BookmarkSquareIcon className='w-8 text-cyan-500' /> Sico Index
         </h1>
       </div>
       <div>
