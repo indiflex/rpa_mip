@@ -23,13 +23,38 @@ const SampleData = {
       ],
     },
     { id: 2, title: 'React Study2', marks: [] },
-    { id: 3, title: 'React Study3', marks: [] },
-    { id: 4, title: 'React Study4', marks: [] },
   ],
 };
 
 function App() {
   const [data, setData] = useState(SampleData);
+
+  const addBook = () => {
+    setData({
+      ...data,
+      books: [...data.books, { id: 0, title: '', marks: [] }],
+    });
+  };
+
+  // 수정(등록포함)
+  const saveBook = (book) => {
+    const books = data.books.filter((_book) => _book.id !== book.id);
+    if (!book.id) {
+      book.id = Math.max(...data.books.map((_book) => _book.id)) + 1;
+    }
+
+    setData({
+      ...data,
+      books: [...books, book],
+    });
+  };
+
+  const removeBook = (bookId) => {
+    setData({
+      ...data,
+      books: [...data.books.filter((_book) => _book.id !== bookId)],
+    });
+  };
 
   return (
     <div className='bg-cyan-100x h-screen  w-full overflow-y-hidden overflow-x-scroll'>
@@ -40,10 +65,18 @@ function App() {
       <main>
         <div className='flex items-start p-4'>
           {data.books.map((book) => (
-            <Book key={book.id} book={book} />
+            <Book
+              key={book.id}
+              book={book}
+              saveBook={saveBook}
+              removeBook={removeBook}
+            />
           ))}
           <div>
-            <button className='mr-2 w-64 rounded-sm bg-cyan-400 px-5 py-1 font-medium text-white hover:bg-cyan-500'>
+            <button
+              onClick={addBook}
+              className='mr-2 w-64 rounded-sm bg-cyan-400 px-5 py-1 font-medium text-white hover:bg-cyan-500'
+            >
               + Add Book
             </button>
           </div>
