@@ -29,6 +29,7 @@ const SampleData = {
 function App() {
   const [data, setData] = useState(SampleData);
 
+  // Add Book 버튼 클릭시 호출되며, id=0인 book을 하나 끼워 넣는다!
   const addBook = () => {
     setData({
       ...data,
