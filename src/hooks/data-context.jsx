@@ -53,6 +53,7 @@ export const DataProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    // 브라우저의 localStorage에 값이 있으면 그것을 기본 데이터로 사용!
     const mipData = localStorage.getItem(SKEY);
     console.log(mipData);
     if (mipData) setData(JSON.parse(mipData));
