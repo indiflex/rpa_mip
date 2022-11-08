@@ -14,7 +14,9 @@ function App() {
       <main>
         <div className='flex items-start p-4'>
           {data.books
-            .sort((a, b) => a.id - b.id)
+            .sort((a, b) =>
+              a.id === 0 ? Number.MAX_SAFE_INTEGER : a.id - b.id
+            )
             .map((book) => (
               <Book
                 key={book.id}
@@ -24,12 +26,16 @@ function App() {
               />
             ))}
           <div>
-            <button
-              onClick={addBook}
-              className='mr-2 w-64 rounded-sm bg-cyan-400 px-5 py-1 font-medium text-white hover:bg-cyan-500'
-            >
-              + Add Book
-            </button>
+            {data.books.find((book) => !book.id) ? (
+              ''
+            ) : (
+              <button
+                onClick={addBook}
+                className='mr-2 w-64 rounded-sm bg-cyan-400 px-5 py-1 font-medium text-white hover:bg-cyan-500'
+              >
+                + Add Book
+              </button>
+            )}
           </div>
         </div>
       </main>
