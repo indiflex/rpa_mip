@@ -2,14 +2,19 @@ import { Mark } from './Mark';
 
 export const Book = ({ book }) => {
   return (
-    <div className='box-border border-4 mr-2 w-4/12 p-1.5'>
-      <div className='font-bold text-xl text-slate-700'>{book.title}</div>
-      {book.marks.length ? (
-        book.marks.map((mark) => <Mark key={mark.id} mark={mark} />)
-      ) : (
-        <hr className='border-3 mt-0 mb-3' />
-      )}
-      <button className='bg-cyan-400 rounded-full px-4 py-1 text-white font-medium hover:bg-cyan-500 float-right'>
+    <div className='mr-3 w-64 flex-shrink-0 rounded bg-gray-200 p-1.5'>
+      <div className='h-[80vh] overflow-y-scroll xs:h-[82vh] sm:h-[84vh] md:h-[86vh] xl:h-[88vh]'>
+        <div className='flex items-center justify-between text-xl font-bold text-slate-700'>
+          <h3>{book.title}</h3>
+          <div className='text-sm'>Follow</div>
+        </div>
+        {book.marks.length ? (
+          book.marks.map((mark) => <Mark key={mark.id} mark={mark} />)
+        ) : (
+          <hr className='border-3 mt-0 mb-3 border-white' />
+        )}
+      </div>
+      <button className='float-right mt-2 rounded-full bg-cyan-400 px-4 py-1 font-medium text-white hover:bg-cyan-500'>
         + Add Mark
       </button>
     </div>

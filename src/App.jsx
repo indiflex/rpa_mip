@@ -23,6 +23,8 @@ const SampleData = {
       ],
     },
     { id: 2, title: 'React Study', marks: [] },
+    { id: 3, title: 'React Study', marks: [] },
+    { id: 4, title: 'React Study', marks: [] },
   ],
 };
 
@@ -30,16 +32,16 @@ function App() {
   const [data, setData] = useState(SampleData);
 
   return (
-    <div>
+    <div className='h-screen w-full overflow-y-hidden overflow-x-scroll'>
       <header>
         <Nav />
       </header>
-      <main className='container flex justify-start px-6 mx-auto mt-5 space-y-0'>
+      <main className='container mt-5 w-screen min-w-full flex-nowrap space-y-0 overflow-scroll px-6 md:flex'>
         {data.books.map((book) => (
           <Book key={book.id} book={book} />
         ))}
         <div>
-          <button className='bg-cyan-400 text-white px-5 py-1 rounded-sm font-medium hover:bg-cyan-500'>
+          <button className='rounded-sm bg-cyan-400 px-5 py-1 font-medium text-white hover:bg-cyan-500'>
             + Add Book
           </button>
         </div>
