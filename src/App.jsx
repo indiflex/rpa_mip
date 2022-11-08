@@ -3,7 +3,7 @@ import { Nav } from './components/Nav';
 import { useData } from './hooks/data-context';
 
 function App() {
-  const { data, addBook, saveBook, removeBook } = useData();
+  const { data, addBook } = useData();
 
   return (
     <div className='bg-cyan-100x h-screen  w-full overflow-y-hidden overflow-x-scroll'>
@@ -11,6 +11,12 @@ function App() {
         <Nav />
       </header>
 
+      {/* <Book
+                key={book.id}
+                book={book}
+                saveBook={saveBook}
+                removeBook={removeBook}
+              /> */}
       <main>
         <div className='flex items-start p-4'>
           {data.books
@@ -18,12 +24,7 @@ function App() {
               a.id === 0 ? Number.MAX_SAFE_INTEGER : a.id - b.id
             )
             .map((book) => (
-              <Book
-                key={book.id}
-                book={book}
-                saveBook={saveBook}
-                removeBook={removeBook}
-              />
+              <Book key={book.id} book={book} />
             ))}
           <div>
             {data.books.find((book) => !book.id) ? (

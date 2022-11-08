@@ -1,8 +1,10 @@
 import { useReducer, useState } from 'react';
 import { ArrowPathIcon, Cog8ToothIcon } from '@heroicons/react/24/outline';
 import { Mark } from './Mark';
+import { useData } from '../hooks/data-context';
 
-export const Book = ({ book, saveBook, removeBook }) => {
+export const Book = ({ book }) => {
+  const { saveBook, removeBook, addMark } = useData();
   const [bookTitle, setBookTitle] = useState(book.title);
   const [isEditing, toggleEditing] = useReducer((pre) => !pre, false);
 
@@ -16,7 +18,7 @@ export const Book = ({ book, saveBook, removeBook }) => {
     <div className='mr-3 w-64 flex-shrink-0 rounded bg-gray-200 p-1.5'>
       <div className='h-[76vh] overflow-y-scroll xs:h-[78vh] sm:h-[80vh] md:h-[82vh] xl:h-[84vh]'>
         <div className='flex items-center justify-between text-xl font-bold text-slate-700'>
-          <h3 className='truncate'>{book.title}</h3>
+          <h3 className='truncate'>{book?.title}</h3>
           <button
             onClick={toggleEditing}
             className='text-sm text-cyan-400 hover:text-cyan-600'
@@ -29,7 +31,7 @@ export const Book = ({ book, saveBook, removeBook }) => {
           </button>
         </div>
 
-        {book.id === 0 || isEditing ? (
+        {book?.id === 0 || isEditing ? (
           <div className='p-1.5'>
             <input
               type='text'
@@ -51,13 +53,18 @@ export const Book = ({ book, saveBook, removeBook }) => {
               Save
             </button>
           </div>
-        ) : book.marks.length ? (
-          book.marks.map((mark) => <Mark key={mark.id} mark={mark} />)
+        ) : book?.marks?.length ? (
+          book?.marks.map((mark) => (
+            <Mark key={mark.id} book={book} mark={mark} />
+          ))
         ) : (
           <hr className='border-3 mt-0 mb-3 border-white' />
         )}
       </div>
-      <button className='float-right mt-2 rounded-full bg-cyan-400 px-4 py-1 font-medium text-white hover:bg-cyan-500'>
+      <button
+        onClick={() => addMark(book)}
+        className='float-right mt-2 rounded-full bg-cyan-400 px-4 py-1 font-medium text-white hover:bg-cyan-500'
+      >
         + Add Mark
       </button>
     </div>

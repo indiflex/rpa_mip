@@ -40,6 +40,29 @@ const reducer = (data, action) => {
       };
       break;
 
+    case 'add-mark':
+      newData = {
+        ...data,
+      };
+      break;
+
+    // case 'save-mark':
+    //   newData = {
+    //     ...data,
+    //     books: [
+    //       ...data.books.filter((_book) => _book.id !== action.payload.id),
+    //       action.payload,
+    //     ],
+    //   };
+    //   break;
+
+    case 'remove-mark':
+      newData = {
+        ...data,
+        books: [...data.books.filter((_book) => _book.id !== action.payload)],
+      };
+      break;
+
     default:
       throw new Error('Not Defined Action!!');
   }
@@ -93,6 +116,30 @@ export const DataProvider = ({ children }) => {
     dispatch({ type: 'remove', payload: bookId });
   };
 
+  const addMark = (book) => {
+    book.marks.push({ id: 0, image: '', title: '', description: '' });
+    dispatch({ type: 'add-mark', payload: book });
+  };
+
+  const saveMark = (book, mark) => {
+    if (!mark.id || isNaN(mark.id)) {
+      const allMarks = [...data.books.map((book) => book.marks)];
+      console.log('allMarks>>>>', allMarks);
+      mark.id = Math.max(...allMarks.flat().map((_mark) => _mark.id)) + 1;
+    }
+    // book.marks = [...book.marks.filter((_mark) => _mark.id !== mark.id), mark];
+    dispatch({ type: 'save', payload: book });
+  };
+
+  const removeMark = (book, markId) => {
+    console.log('book>>>', book);
+    console.log('markId>>>', markId);
+    // 해당 북에서 삭제하고자 하는 마크를 제외시키고
+    book.marks = [...book.marks.filter((mark) => mark.id !== markId)];
+    // 해당 북을 저장
+    dispatch({ type: 'save', payload: book });
+  };
+
   // useEffect(() => {
   //   // 브라우저의 localStorage에 값이 있으면 그것을 기본 데이터로 사용!
   //   const mipData = localStorage.getItem(SKEY);
@@ -101,7 +148,17 @@ export const DataProvider = ({ children }) => {
   // }, []);
 
   return (
-    <DataContext.Provider value={{ data, addBook, saveBook, removeBook }}>
+    <DataContext.Provider
+      value={{
+        data,
+        addBook,
+        saveBook,
+        removeBook,
+        addMark,
+        saveMark,
+        removeMark,
+      }}
+    >
       {children}
     </DataContext.Provider>
   );
