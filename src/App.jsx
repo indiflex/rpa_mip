@@ -38,11 +38,16 @@ function App() {
 
   // 수정(등록포함)
   const saveBook = (book) => {
+    // 1. 현재 수정중인 book을 제외한 book 필터링
     const books = data.books.filter((_book) => _book.id !== book.id);
+
+    // 2. 만약 id=0인 등록 상태라면 기존 id 가장 큰 값에서 +1 해서 신규 id 생성
     if (!book.id) {
       book.id = Math.max(...data.books.map((_book) => _book.id)) + 1;
     }
 
+    // 3. 새롭게 데이터를 만들 때, 현재 수정중인것을 제외한 books에,
+    // 현재 수정중인 book 추가해서 새로운 books 생성
     setData({
       ...data,
       books: [...books, book],

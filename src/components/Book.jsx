@@ -1,3 +1,4 @@
+import { Cog8ToothIcon, PencilSquareIcon } from '@heroicons/react/24/outline';
 import { useReducer, useState } from 'react';
 import { Mark } from './Mark';
 
@@ -20,7 +21,7 @@ export const Book = ({ book, saveBook, removeBook }) => {
             onClick={toggleEditing}
             className='text-sm text-cyan-400 hover:text-cyan-600'
           >
-            {isEditing ? 'Cancel' : 'Edit'}
+            <Cog8ToothIcon className='w-5 text-cyan-400 hover:text-cyan-600' />
           </button>
         </div>
         {book.marks.length ? (
