@@ -14,16 +14,17 @@ export const Mark = ({ book, mark }) => {
 
   const scrapOg = async (url) => {
     // const html = await ky(url).text();
-    // const html = await ky(`https://cors-anywhere.herokuapp.com/${url}`).text();
-    const html = await ky(`https://proxy.cors.sh/${url}`).text();
-    // console.log('html>>', html);
-    const ogs = html.match(/<meta property="og:(.*?)>/gi);
-    console.log(ogs);
-    const kv = ogs.map((og) =>
-      og.match(/["|'](.*?)["|']/g).map((s) => s.replace(/(["|']|(og:))/g, ''))
-    );
-    console.log('kv>>', kv);
-    return Object.fromEntries(kv);
+    // const html = await ky(`https://sz.topician.com/sz/proxy?url=${url}`).text();
+    // const html = await ky(`https://sz.topician.com/sz/proxy?url=${url}`).text();
+    // // console.log('html>>', html);
+    // const ogs = html.match(/<meta property="og:(.*?)>/gi);
+    // console.log(ogs);
+    // const kv = ogs.map((og) =>
+    //   og.match(/["|'](.*?)["|']/g).map((s) => s.replace(/(["|']|(og:))/g, ''))
+    // );
+    // console.log('kv>>', kv);
+    // return Object.fromEntries(kv);
+    return await ky(`https://sz.topician.com/sz/proxy?url=${url}`).json();
   };
 
   const save = (evt) => {
@@ -32,16 +33,22 @@ export const Mark = ({ book, mark }) => {
     if (isEditing) {
       const url = urlRef.current.value;
       mark.image = null;
-      mark.title = 'TTT';
-      mark.description = 'DDD';
+      mark.title = 'Fetching...';
+      mark.description = '';
       mark.url = url;
-      scrapOg(url).then((ogRet) => {
-        console.log('ogRet>>>', ogRet);
-        mark.title = ogRet.title || 'No Title';
-        mark.image = ogRet.image;
-        mark.description = ogRet.description;
-        saveMark(book, mark);
-      });
+      scrapOg(url)
+        .then((ogRet) => {
+          console.log('ogRet>>>', ogRet);
+          mark.title = ogRet.title || 'No Title';
+          mark.image = ogRet.image;
+          mark.description = ogRet.description;
+          saveMark(book, mark);
+        })
+        .catch((error) => {
+          mark.title = 'ERROR!! ' + error.message;
+          mark.description = 'Please remove this!';
+          saveMark(book, mark);
+        });
     }
     toggleEditing();
   };
@@ -78,12 +85,12 @@ export const Mark = ({ book, mark }) => {
         </>
       ) : (
         <div>
-          <div>
+          <div className='flex justify-center'>
             {mark.image && (
               <img
                 src={mark.image}
                 alt={mark.title}
-                className='max-h-[100px] w-full'
+                className='max-h-[100px]'
               />
             )}
           </div>
