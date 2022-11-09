@@ -13,8 +13,9 @@ export const Mark = ({ book, mark }) => {
   const urlRef = useRef();
 
   const scrapOg = async (url) => {
-    const html = await ky(url).text();
+    // const html = await ky(url).text();
     // const html = await ky(`https://cors-anywhere.herokuapp.com/${url}`).text();
+    const html = await ky(`https://proxy.cors.sh/${url}`).text();
     // console.log('html>>', html);
     const ogs = html.match(/<meta property="og:(.*?)>/gi);
     console.log(ogs);
