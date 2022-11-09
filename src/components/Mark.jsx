@@ -65,7 +65,7 @@ export const Mark = ({ book, mark }) => {
 
   useEffect(() => {
     if (urlRef.current)
-      urlRef.current.value = mark.url || 'https://tailwindcss.com';
+      urlRef.current.value = mark.url || 'https://indiflex.github.io/rpa_mip/';
   }, [isEditing]);
 
   return (
@@ -79,6 +79,7 @@ export const Mark = ({ book, mark }) => {
           <input
             type='text'
             ref={urlRef}
+            onFocus={() => urlRef.current.select()}
             className='mb-2 w-full rounded p-1.5'
             placeholder='https://....'
           />
