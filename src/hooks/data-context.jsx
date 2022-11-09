@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer } from 'react';
+import { createContext, useContext, useReducer, useState } from 'react';
 
 const SKEY = 'mipdata';
 
@@ -80,6 +80,8 @@ export const DataProvider = ({ children }) => {
     JSON.parse(localStorage.getItem(SKEY)) || SampleData
   );
 
+  const [searchStr, setSearchStr] = useState('');
+
   // Add Book 버튼 클릭시 호출되며, id=0인 book을 하나 끼워 넣는다!
   const addBook = () => {
     // setData({
@@ -157,6 +159,8 @@ export const DataProvider = ({ children }) => {
         addMark,
         saveMark,
         removeMark,
+        searchStr,
+        setSearchStr,
       }}
     >
       {children}

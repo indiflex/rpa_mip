@@ -42,7 +42,7 @@ function App() {
       </main>
 
       <footer className='text-center text-slate-500'>
-        Copyright Indiflex Senior Coding 2022
+        &#169; Indiflex - Senior Coding 2022
       </footer>
     </div>
   );

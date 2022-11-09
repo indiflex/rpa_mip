@@ -51,8 +51,8 @@ export const Mark = ({ book, mark }) => {
   };
 
   const openSite = () => {
-    console.log('openSite!!>>>', mark);
-    window.open(mark.url, '_blank');
+    // console.log('openSite!!>>>', mark);
+    if (!isEditing) window.open(mark.url, '_blank');
   };
 
   useEffect(() => {
@@ -99,7 +99,10 @@ export const Mark = ({ book, mark }) => {
           isEditing ? 'flex' : 'hidden'
         } justify-end group-hover:flex`}
       >
-        <button onClick={save} className='mb-1 mr-1 rounded-full p-2'>
+        <button
+          onClick={save}
+          className='mb-1 mr-1 rounded-full bg-cyan-400 p-2 hover:bg-cyan-600'
+        >
           <PencilSquareIcon className='h-4 text-white' />
         </button>
         <button
